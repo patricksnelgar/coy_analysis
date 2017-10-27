@@ -1,0 +1,43 @@
+Starting COY analysis...
+File loaded <coyvort.csv>
+Running analysis...
+
+------ King flowers summary -----
+| Flowers per shoot | Frequency |
+---------------------------------
+| #0                | 581       |
+| #1                | 520       |
+| #2                | 573       |
+| #3                | 813       |
+| #4                | 1056      |
+| #5                | 1427      |
+| #6                | 1604      |
+| #7                | 981       |
+| #8                | 343       |
+| #9                | 70        |
+| #.                | 4739      |
+---------------------------------
+
+Total number of canes: 320
+Number of shoots: 7387
+Average flowers per shoot: 4.78 
+
+4875 flowers need to be thinned to achieve max 5 flowers per floral shoot
+Average flowers per shoot after thinning: 4.12
+9300 flowers need to be thinned to achieve max 4 flowers per floral shoot
+Average flowers per shoot after thinning: 3.52
+
+Normalized graph
+-----------------
+| 0 |-          |
+| 1 |-          |
+| 2 |-          |
+| 3 |--         |
+| 4 |--         |
+| 5 |---        |
+| 6 |---        |
+| 7 |--         |
+| 8 |-          |
+| 9 |           |
+| . |---------- |
+-----------------
