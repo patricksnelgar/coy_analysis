@@ -44,6 +44,8 @@ public class CoyAnalysis {
 					if(s.matches("^[0-9].*")){
 						String[] split = s.split(",");
 						//System.out.println(split.length);
+
+						// Length will be 3 for old style recording where coy string starts with ','
 						if(split.length == 3){
 							
 							int id = Integer.parseInt(split[0]);
@@ -58,6 +60,18 @@ public class CoyAnalysis {
 								errors.add(s);
 							}						
 							
+						} else if(split.length == 2){
+							int id = Integer.parseInt(split[0]);
+							// split[1] == "
+							String cane[] = split[1].split("L");							
+							if(cane.length == 2){
+								//System.out.println(Arrays.toString(cane));
+								String laterals = cane[1].replace("\"", "");
+								String[] single_cane = {"" + id, cane[0], laterals};
+								cane_data.add(single_cane);
+							} else {
+								errors.add(s);
+							}		
 						} else {
 							errors.add(s);
 						}
@@ -130,7 +144,7 @@ public class CoyAnalysis {
 		private int sumBins(int[] bin) {
 			int sum = 0;
 			// Ignore the last bin as they are equal to 0's
-			for(int i = 1; i < bin.length - 1; i++){
+			for(int i = 1; i < bin.length - 2; i++){
 				sum += bin[i] * i;
 			}
 			//System.out.println(sum);
@@ -196,7 +210,11 @@ public class CoyAnalysis {
 						
 					}
 				}
+				//System.out.println("Cane data: " + cane_data.get(i)[1]);
+				//System.out.println("total flowers: " + total + "to remove for target 2: " + flowersToRemoveForMax(2, cane_stats));
 			}
+
+
 
 			if(file_writer != null){
 				try{
@@ -211,6 +229,7 @@ public class CoyAnalysis {
 			int[] bins = new int[12];
 			short num_buds = (short)cane.length();
 			short num_shoots = 0;
+			//System.out.println("Analyzing: " + cane + " with " + (short)cane.length() + "buds");
 			for(int j = 0; j < num_buds; j++){
 				try {
 					int flowers = Integer.parseInt(cane.substring(j, j+1));
@@ -222,6 +241,7 @@ public class CoyAnalysis {
 				}
 			}
 			bins[11] = num_shoots;
+			//System.out.println("shoots: " + num_shoots);
 			return bins;
 		}
 
@@ -320,13 +340,13 @@ public class CoyAnalysis {
 		public int flowersToRemoveForMax(int target, int[] bins){
 			int flowers_to_remove = 0;
 			if(target < 1 || target > 9) {
-				System.out.println("Thinning target of #" + target + " not valid");
+				System.out.println("Thinning target of #" + target + " is not valid");
 				return 0;
 			}
 
 
 			// Want to start the thinning OVER the max
-			for(int i = target; i < bins.length -1; i++){
+			for(int i = target; i < bins.length -2; i++){
 				flowers_to_remove += (bins[i] * (i - target));
 			}
 
